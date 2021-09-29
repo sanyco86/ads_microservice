@@ -1,14 +1,21 @@
-class CreateAds < ActiveRecord::Migration[6.1]
-  def change
-    create_table :ads do |t|
-      t.string :title, null: false
-      t.text   :description, null: false
-      t.string :city, null: false
-      t.float  :lat
-      t.float  :lon
-      t.integer :user_id, null: false
+Sequel.migration do
+  change do
+    create_table :ads do
+      primary_key :id, type: Bignum
 
-      t.timestamps
+      column :title,       "character varying", null: false
+      column :description, "text",              null: false
+      column :city,        "character varying", null: false
+
+      column :lat,         "double precision"
+      column :lon,         "double precision"
+
+      column :user_id,     :Bignum,             null: false
+
+      column :created_at, "timestamp(6) without time zone", null: false
+      column :updated_at, "timestamp(6) without time zone", null: false
+
+      index [:user_id], name: :index_ads_on_user_id
     end
   end
 end
