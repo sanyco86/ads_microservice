@@ -1,12 +1,7 @@
-require 'spec_helper'
-
-describe CreateService do
-  subject { CreateService.new(params).call }
+RSpec.describe Ads::CreateService do
+  subject { described_class }
 
   let(:user_id) { 333 }
-  let(:params) do
-    ad_params.merge(user_id: user_id)
-  end
 
   context 'valid parameters' do
     let(:ad_params) do
@@ -18,11 +13,11 @@ describe CreateService do
     end
 
     it 'creates a new ad' do
-      expect { subject.call }.to change(Ad, :count).by(1)
+      expect { subject.call(ad: ad_params, user_id: user_id) }.to change { Ad.count }.from(0).to(1)
     end
 
     it 'assigns ad' do
-      result = subject.call
+      result = subject.call(ad: ad_params, user_id: user_id)
 
       expect(result.ad).to be_kind_of(Ad)
     end
@@ -38,11 +33,11 @@ describe CreateService do
     end
 
     it 'does not create ad' do
-      expect { subject.call }.not_to change(Ad, :count)
+      expect { subject.call(ad: ad_params, user_id: user_id) }.not_to change { Ad.count }
     end
 
     it 'assigns ad' do
-      result = subject.call
+      result = subject.call(ad: ad_params, user_id: user_id)
 
       expect(result.ad).to be_kind_of(Ad)
     end
