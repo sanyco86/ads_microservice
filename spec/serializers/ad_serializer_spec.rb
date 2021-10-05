@@ -16,7 +16,7 @@ describe AdSerializer do
   end
 
   it 'returns ad representation' do
-    expect(subject.serializable_hash).to a_hash_including(
+    expect(subject.serializable_hash).to include(
       data: [
         {
           id: ad.id.to_s,

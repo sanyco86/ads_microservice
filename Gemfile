@@ -12,6 +12,9 @@ gem 'rake', '13.0.6'
 gem 'sinatra', '2.1.0', require: 'sinatra/base'
 gem 'sinatra-contrib', '2.1.0'
 
+gem 'faraday', '1.7.2'
+gem 'faraday_middleware', '1.1.0'
+
 gem 'i18n', '1.8.10'
 gem 'config', '3.1.0'
 

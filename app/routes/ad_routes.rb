@@ -1,5 +1,5 @@
 class AdRoutes < Application
-  helpers PaginationLinks
+  helpers PaginationLinks, Auth
 
   namespace '/v1' do
     get '/ads' do
@@ -14,7 +14,7 @@ class AdRoutes < Application
 
     post '/ads' do
       create_params = validate_with!(AdParamsContract)
-      result = Ads::CreateService.call(ad: create_params[:ad], user_id: params[:user_id])
+      result = Ads::CreateService.call(ad: create_params[:ad], user_id: user_id)
 
       if result.success?
         serializer = AdSerializer.new(result.ad)
