@@ -18,12 +18,38 @@ describe AdRoutes, type: :routes do
 
   describe 'POST /v1/ads' do
     let(:user_id) { 333 }
+    let(:auth_token) { 'auth.token' }
+    let(:auth_service) { instance_double('Auth service') }
+    before do
+      allow(auth_service).to receive(:auth).with(auth_token).and_return(user_id)
+      allow(AuthService::Client).to receive(:new).and_return(auth_service)
+
+      header 'Authorization', "Bearer #{auth_token}"
+    end
 
     context 'missing parameters' do
       it 'returns an error' do
         do_request
 
         expect(last_response.status).to eq 422
+      end
+    end
+
+    context 'missing user_id' do
+      let(:user_id) { nil }
+
+      let(:ad_params) do
+        {
+          title: 'Ad title',
+          description: 'Ad description',
+          city: 'City'
+        }
+      end
+
+      it 'returns an error' do
+        do_request ad: ad_params
+        expect(last_response.status).to eq(403)
+        expect(response_body['errors']).to include('detail' => 'Доступ к ресурсу ограничен')
       end
     end
 
@@ -37,7 +63,7 @@ describe AdRoutes, type: :routes do
       end
 
       it 'returns an error' do
-        do_request(ad: ad_params, user_id: user_id)
+        do_request(ad: ad_params)
 
         expect(last_response.status).to eq 422
         expect(response_body['errors']).to include(
@@ -63,15 +89,15 @@ describe AdRoutes, type: :routes do
       let(:last_ad) { Ad.last }
 
       it 'creates a new ad' do
-        expect { do_request(ad: ad_params, user_id: user_id) }.to change { Ad.count }.from(0).to(1)
+        expect { do_request(ad: ad_params) }.to change { Ad.count }.from(0).to(1)
 
         expect(last_response.status).to eq 201
       end
 
       it 'returns an ad' do
-        do_request(ad: ad_params, user_id: user_id)
+        do_request(ad: ad_params)
 
-        expect(response_body['data']).to a_hash_including(
+        expect(response_body['data']).to include(
           'id' => last_ad.id.to_s,
           'type' => 'ad'
         )
@@ -79,7 +105,7 @@ describe AdRoutes, type: :routes do
     end
 
     def do_request(params={})
-      post '/v1/ads', params
+      post 'v1/ads', params
     end
   end
 end
