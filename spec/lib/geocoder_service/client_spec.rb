@@ -23,7 +23,7 @@ describe GeocoderService::Client, type: :client do
     let(:body) { nil.to_json }
 
     it 'returns invalid coordinates' do
-      expect(subject.coordinates('invalid.city')).to eq(JSON.parse(body))
+      expect(subject.coordinates('invalid.city')).to eq(nil)
     end
   end
 end

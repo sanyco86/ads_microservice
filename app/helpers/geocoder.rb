@@ -1,7 +1,6 @@
 module Geocoder
-  def geocoder
-    coordinates ||= geocoder_service.coordinates(city)
-    { lat: coordinates.try(:[], 0), lon: coordinates.try(:[], 1) }
+  def coordinates
+    geocoder_service.coordinates(city)
   end
 
   private
@@ -11,6 +10,6 @@ module Geocoder
   end
 
   def city
-    params.try(:[], 'ad').try(:[], 'city')
+    params.dig('ad', 'city')
   end
 end
