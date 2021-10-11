@@ -23,7 +23,7 @@ describe AdRoutes, type: :routes do
     let(:auth_token) { 'auth.token' }
     let(:auth_service) { instance_double('Auth service') }
 
-    let(:coordinates) { { lat: 45.05, lon: 90.05 } }
+    let(:coordinates) { [45.05,90.05] }
     let(:geocoder_service) { instance_double('Geocoder service') }
 
     before do
