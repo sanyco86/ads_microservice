@@ -6,16 +6,16 @@ module AuthService
     extend Dry::Initializer[undefined: false]
     include Api
 
-    option :url,        default: proc { Settings.microservices.auth_url }
+    option :url, default: proc { 'http://localhost:3001/api/v1' }
     option :connection, default: proc { build_connection }
 
     private
 
     def build_connection
       Faraday.new(@url) do |conn|
-        conn.request  :json
+        conn.request :json
         conn.response :json, content_type: /\bjson$/
-        conn.adapter  Faraday.default_adapter
+        conn.adapter Faraday.default_adapter
       end
     end
   end
