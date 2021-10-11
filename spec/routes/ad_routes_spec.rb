@@ -18,11 +18,20 @@ describe AdRoutes, type: :routes do
 
   describe 'POST /v1/ads' do
     let(:user_id) { 333 }
+    let(:city) { 'City' }
+
     let(:auth_token) { 'auth.token' }
     let(:auth_service) { instance_double('Auth service') }
+
+    let(:coordinates) { { lat: 45.05, lon: 90.05 } }
+    let(:geocoder_service) { instance_double('Geocoder service') }
+
     before do
       allow(auth_service).to receive(:auth).with(auth_token).and_return(user_id)
       allow(AuthService::Client).to receive(:new).and_return(auth_service)
+
+      allow(geocoder_service).to receive(:coordinates).with(city).and_return(coordinates)
+      allow(GeocoderService::Client).to receive(:new).and_return(geocoder_service)
 
       header 'Authorization', "Bearer #{auth_token}"
     end
@@ -54,6 +63,8 @@ describe AdRoutes, type: :routes do
     end
 
     context 'invalid parameters' do
+      let(:city) { '' }
+
       let(:ad_params) do
         {
           title: 'Ad title',
