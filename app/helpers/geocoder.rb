@@ -1,6 +1,6 @@
 module Geocoder
   def coordinates
-    geocoder_service.coordinates(city)
+    geocoder_service.geocode_later(city)
   end
 
   private

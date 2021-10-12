@@ -14,7 +14,7 @@ class AdRoutes < Application
 
     post '/ads' do
       create_params = validate_with!(AdParamsContract)
-      result = Ads::CreateService.call(ad: create_params[:ad], user_id: user_id, coordinates: coordinates)
+      result = Ads::CreateService.call(ad: create_params[:ad], user_id: user_id)
 
       if result.success?
         serializer = AdSerializer.new(result.ad)
@@ -25,6 +25,12 @@ class AdRoutes < Application
         status 422
         error_response result.ad
       end
+    end
+
+    patch '/ads/:id' do
+      result = Ads::UpdateService.call(id: params['id'], data: params['coordinates'])
+
+      result.success? ? status(200) : status(422)
     end
   end
 end

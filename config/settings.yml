@@ -6,6 +6,6 @@ db:
 pagination:
   page_size: 10
 
-microservices:
-  auth_url: http://localhost:3001/api/v1
-  geocoder_url: http://localhost:3002/api/v1
+rabbit_mq:
+  consumer_pool: 10
+  url: amqp://user_name:password@localhost:5672

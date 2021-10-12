@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'bunny-mock'
 
 ENV['RACK_ENV'] ||= 'test'
 
