@@ -51,9 +51,12 @@ module AuthService
         @queue.publish(
           payload,
           opts.merge(
-            app_id: 'ads',
+            app_id: Settings.app.name,
             reply_to: @reply_queue.name,
-            correlation_id: @correlation_id
+            correlation_id: @correlation_id,
+            headers: {
+              request_id: Thread.current[:request_id]
+            }
           )
         )
 

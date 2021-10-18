@@ -16,6 +16,10 @@ gem 'sinatra-contrib', '2.1.0'
 gem 'faraday', '1.7.2'
 gem 'faraday_middleware', '1.1.0'
 
+gem 'rack-ougai', '0.2.1'
+gem 'rack-request-id', '0.0.4'
+gem 'amazing_print', '1.4.0'
+
 gem 'i18n', '1.8.10'
 gem 'config', '3.1.0'
 
