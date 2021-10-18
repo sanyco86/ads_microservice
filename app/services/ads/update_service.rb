@@ -2,9 +2,11 @@ module Ads
   class UpdateService
     prepend BasicService
 
-    param :id
-    param :data
+    option :id
+    option :data
     option :ad, default: proc { Ad.first(id: @id) }
+
+    attr_reader :ad
 
     def call
       return fail!(I18n.t(:not_found, scope: 'services.ads.update_service')) if @ad.blank?
