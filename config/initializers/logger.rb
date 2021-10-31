@@ -1,10 +1,8 @@
 Application.configure do |app|
-  logger = Ougai::Logger.new(
-    app.root.concat('/', Settings.logger.path),
-    level: Settings.logger.level
-  )
+  log_dev = app.production? ? STDOUT : app.root.concat('/', Settings.logger.path)
+  logger = Ougai::Logger.new(log_dev, level: Settings.logger.level)
 
-  logger.formatter = Ougai::Formatters::Readable.new if Application.development?
+  logger.formatter = Ougai::Formatters::Readable.new if app.development?
 
   logger.before_log = lambda do |data|
     data[:service] = { name: Settings.app.name }

@@ -24,6 +24,8 @@ module ApplicationLoader
     require_file 'config/application'
     require_file 'app/services/basic_service'
     require_dir  'app/contracts'
+    require_file 'app/lib/geocoder_service/api'
+    require_file 'app/lib/auth_service/api'
     require_dir  'app'
   end
 

@@ -23,7 +23,7 @@ namespace :db do
     require 'sequel/core'
     Sequel.extension :migration
 
-    Sequel.connect(Settings.db.to_hash) do |db|
+    Sequel.connect(Settings.db.url || Settings.db.to_hash) do |db|
       version = args.version.to_i if args.version
       migrate = File.expand_path('../../db/migrate', __dir__)
 
@@ -36,7 +36,7 @@ namespace :db do
     require 'sequel/core'
     Sequel.extension :migration
 
-    Sequel.connect(Settings.db.to_hash) do |db|
+    Sequel.connect(Settings.db.url || Settings.db.to_hash) do |db|
       step             = args[:step] ? Integer(args[:step]) : 1
       version          = 0
       target_migration = db[:schema_migrations].reverse_order(:filename).offset(step).first

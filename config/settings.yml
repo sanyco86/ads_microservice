@@ -5,13 +5,16 @@ db:
   adapter: postgresql
   host: localhost
   user: postgres
+  url: <%= ENV['ADS_DATABASE_URL']%>
 
 pagination:
   page_size: 10
 
 rabbit_mq:
   consumer_pool: 10
-  url: amqp://user_name:password@localhost:5672
+  host: <%= ENV['RABBITMQ_HOST']%>
+  username: <%= ENV['RABBITMQ_USER']%>
+  password: <%= ENV['RABBITMQ_PASSWORD']%>
 
 logger:
   path: log/app.log
