@@ -1,4 +1,12 @@
 .idea
+.env
+hosts
 
 /log/*
 !/log/.keep
+
+config/settings.local.yml
+config/settings/*.local.yml
+
+deploy/*.tar
+deploy/*.tar.gz

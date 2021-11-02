@@ -1,0 +1,6 @@
+[app]
+XXX.XXX.XXX.XXX
+
+[all:vars]
+ansible_user=
+ansible_become_password=
