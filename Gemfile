@@ -10,6 +10,8 @@ gem 'puma', '5.4.0'
 gem 'rake', '13.0.6'
 gem 'bunny', '2.19.0'
 
+gem 'prometheus-client', '2.1.0'
+
 gem 'sinatra', '2.1.0', require: 'sinatra/base'
 gem 'sinatra-contrib', '2.1.0'
 
